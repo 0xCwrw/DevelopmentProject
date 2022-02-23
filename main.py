@@ -1,11 +1,11 @@
-import cv2
+from picamera import PiCamera
+import time
 
-cap = cv2.VideoCapture(0)
-cap.set(3,640)
-cap.set(4,480)
+camera = PiCamera()
+camera.resolution = (1280, 720)
+camera.vflip = True
+camera.hflip = True
+time.sleep(2)
 
-while True:
-    success, img = cap.read()
-    cv2.imshow("Video", img)
-    if cv2.waitKey(1) & 0xFF ==ord('q'):
-        break
+camera.capture("/home/pi/Desktop/DevelopmentProject./img.jpg")
+print("Done.")
