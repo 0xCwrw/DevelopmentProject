@@ -25,7 +25,7 @@ while True:
 #//////////////////////////////////// Detects faces within the input ////////////////////////////////////
     faces = faceCascade.detectMultiScale(
         gray,
-        scaleFactor=1.2,
+        scaleFactor=1.4,
         minNeighbors=5,
         minSize=(30, 30)
     )
