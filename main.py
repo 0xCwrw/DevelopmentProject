@@ -26,7 +26,7 @@ while(True):
         roi_gray = gray[y:y+h, x:x+w] #(ycord_start, ycord_end)
         roi_color = frame[y:y+h, x:x+w]
 
-    	# recognize? deep learned model predict keras tensorflow pytorch scikit learn
+        #After prediction of ROI (Region of interest) computation is focused in that area.
         id_, conf = recogniser.predict(roi_gray)
         if conf>=4 and conf <= 85:
             #print(5: #id_)
