@@ -48,7 +48,9 @@ def save_frame(frame, i):
     # Detects image and calls save frame function.
 def image_collection():
     for i in range(1, 11):
-        sleep(5)
+        ret, frame = cap.read()
+        frame = cv2.flip(frame, 0)
+        sleep(2)
         while(True):
             # Capture frame-by-frame
             ret, frame = cap.read()
@@ -57,18 +59,14 @@ def image_collection():
             faces = face_cascade.detectMultiScale(gray, scaleFactor=1.5, minNeighbors=5)
             x = 0
             if len(faces) == 1:
-                save_frame(frame, i)
-                print("Face detected, sample {}/10 successful.".format(i))
                 break
             elif len(faces) < 1:
                 print("No faces detected, please adjust.")
             else:
                 print("Too many faces detected, there should only be one person in frame.")
-            # Display the resulting frame
-        if cv2.waitKey(20) & 0xFF == ord('q'):
-            x = 1
-            print("Sample collection unsuccessful.")
-            break
+        sleep(2)
+        save_frame(frame, i)
+        print("Face detected, sample {}/10 successful.".format(i))
     if x == 0:
         print("sample collection successful...\nUser {} added to dataset.".format(newUser))
     else:
