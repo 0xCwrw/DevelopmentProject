@@ -41,6 +41,38 @@ def directory_creation(username):
     path = os.path.join(parent_directory, username)
     os.mkdir(path)
     print("Directory {} has been created.\n".format(path))
+    # Saves a frame that has a face detected.
+def save_frame(frame, i):
+    cv2.imwrite('dataset/{}/test{}.png'.format(newUser, i), frame)
+
+    # Detects image and calls save frame function.
+def image_collection():
+    for i in range(1, 11):
+        sleep(5)
+        while(True):
+            # Capture frame-by-frame
+            ret, frame = cap.read()
+            frame = cv2.flip(frame, 0)
+            gray  = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+            faces = face_cascade.detectMultiScale(gray, scaleFactor=1.5, minNeighbors=5)
+            x = 0
+            if len(faces) == 1:
+                save_frame(frame, i)
+                print("Face detected, sample {}/10 successful.".format(i))
+                break
+            elif len(faces) < 1:
+                print("No faces detected, please adjust.")
+            else:
+                print("Too many faces detected, there should only be one person in frame.")
+            # Display the resulting frame
+        if cv2.waitKey(20) & 0xFF == ord('q'):
+            x = 1
+            print("Sample collection unsuccessful.")
+            break
+    if x == 0:
+        print("sample collection successful...\nUser {} added to dataset.".format(newUser))
+    else:
+        print("\n")
 
 
 face_cascade = cv2.CascadeClassifier('cascades/haarcascade_frontalface_default.xml')
@@ -61,26 +93,4 @@ else:
     directory_creation(newUser)
     print("Hello {},\nWe will now begin by scanning your face.".format(newUser))
 
-while(True):
-    # Capture frame-by-frame
-    ret, frame = cap.read()
-    frame = cv2.flip(frame, 0)
-    gray  = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-    faces = face_cascade.detectMultiScale(gray, scaleFactor=1.5, minNeighbors=5)
-    for (x, y, w, h) in faces:
-        print(x,y,w,h)
-        roi_gray = gray[y:y+h, x:x+w] #(ycord_start, ycord_end)
-        roi_color = frame[y:y+h, x:x+w]
-        color = (255, 0, 0) #BGR 0-255 
-        stroke = 2
-        end_cord_x = x + w
-        end_cord_y = y + h
-        cv2.rectangle(frame, (x, y), (end_cord_x, end_cord_y), color, stroke)
-    # Display the resulting frame
-    cv2.imshow(newUser,frame)
-    if cv2.waitKey(20) & 0xFF == ord('q'):
-        break
-
-# When everything done, release the capture
-cap.release()
-cv2.destroyAllWindows()
+image_collection()
