@@ -3,14 +3,16 @@
 # User choses username of directory e.g. cam
 # Validation on that name, against previous dirs and excludiding non letter characters.
 # Then runs faces_training to add new user to the program.
+import shutil
 import cv2
 import os
 from time import sleep
 
 # functions
+
     # name collection and validation.
 def name_collection(user):
-    # Validation: At least one alphabet character, allows for spaces.
+        # Validation: At least one alphabet character, allows for spaces.
     if(any(x.isalpha() for x in user)
     and all(x.isalpha() or x.isspace() for x in user)):
         # Converts user to lower case and whitespaces to '-'
@@ -35,12 +37,19 @@ def name_collection(user):
     else:
         print("Please try again.")
         return 1
+
     # Directory creation function for dataset.
 def directory_creation(username):
     parent_directory = "dataset/"
     path = os.path.join(parent_directory, username)
     os.mkdir(path)
     print("Directory {} has been created.\n".format(path))
+
+    # Function that removes username from dataset.
+def directory_remove(path):
+    shutil.rmtree(path)
+    print("Directory {} has been removed.\n".format(newUser))
+
     # Saves a frame that has a face detected.
 def save_frame(frame, i):
     cv2.imwrite('dataset/{}/test{}.png'.format(newUser, i), frame)
@@ -95,3 +104,4 @@ else:
     print("Hello {},\nWe will now begin by scanning your face.".format(newUser))
 
 image_collection()
+exec(open('faces_training.py').read())
