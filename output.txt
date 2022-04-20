@@ -1,0 +1,57 @@
+*==========================  WELCOME   ==========================*
+
+|    To begin please enter a (user) name you would like to use.  |
+
+|    White spaces will be substituted with a dash.               |
+
+|    Otherwise your name should only contain letters.            |
+
+*================================================================*
+
+Enter name:-user zero three
+The name you entered is: user-zero-three
+
+Would you like to continue with the name 'user-zero-three'?
+
+Type yes or y and press enter to continue:y
+Directory dataset/user-zero-three has been created.
+
+Hello user-zero-three,
+We will now begin by scanning your face.
+No faces detected, please adjust.
+No faces detected, please adjust.
+Face detected, sample 1/10 successful.
+Face detected, sample 2/10 successful.
+No faces detected, please adjust.
+No faces detected, please adjust.
+No faces detected, please adjust.
+No faces detected, please adjust.
+Face detected, sample 3/10 successful.
+No faces detected, please adjust.
+No faces detected, please adjust.
+Face detected, sample 4/10 successful.
+Face detected, sample 5/10 successful.
+No faces detected, please adjust.
+No faces detected, please adjust.
+No faces detected, please adjust.
+Face detected, sample 6/10 successful.
+No faces detected, please adjust.
+No faces detected, please adjust.
+No faces detected, please adjust.
+No faces detected, please adjust.
+No faces detected, please adjust.
+Face detected, sample 7/10 successful.
+No faces detected, please adjust.
+Face detected, sample 8/10 successful.
+No faces detected, please adjust.
+No faces detected, please adjust.
+No faces detected, please adjust.
+No faces detected, please adjust.
+Face detected, sample 9/10 successful.
+No faces detected, please adjust.
+No faces detected, please adjust.
+No faces detected, please adjust.
+Face detected, sample 10/10 successful.
+sample collection successful...
+User user-zero-three added to dataset.
+------------ Training complete ------------
