@@ -1,16 +1,8 @@
 from tkinter import *
 root = Tk()
+root.title('Facial recognition app')
 
-e = Entry(root, width=50)
-e.pack()
-e.insert(0, "enter your name: ")
 
-def myClick():
-    hello = "hello " + e.get()
-    myLabel = Label(root, text=hello)
-    myLabel.pack()
-
-myButton = Button(root, text="enter name", command=myClick)
-myButton.pack()
-
+button_quit = Button(root, text="Exit program", comman=root.quit)
+button_quit.pack()
 root.mainloop()
