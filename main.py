@@ -28,15 +28,16 @@ while(True):
 
         #After prediction of ROI (Region of interest) computation is focused in that area.
         id_, conf = recogniser.predict(roi_gray)
-        if conf>=4 and conf <= 85:
+        if conf>=40 and conf <= 80:
             #print(5: #id_)
             #print(labels[id_])
             font = cv2.FONT_HERSHEY_SIMPLEX
             name = labels[id_]
             color = (255, 255, 255)
             stroke = 2
+            confidence = str(conf)
             cv2.putText(frame, name, (x,y), font, 1, color, stroke, cv2.LINE_AA)
-            
+            cv2.putText(frame, confidence, (y,x), font, 1, color, stroke, cv2.LINE_AA)
         color = (255, 0, 0) #BGR 0-255 
         stroke = 2
         end_cord_x = x + w
@@ -46,7 +47,7 @@ while(True):
     	#for (ex,ey,ew,eh) in subitems:
     	#	cv2.rectangle(roi_color,(ex,ey),(ex+ew,ey+eh),(0,255,0),2)
     # Display the resulting frame
-    cv2.imshow('frame',frame)
+    cv2.imshow('Face detection',frame)
     if cv2.waitKey(20) & 0xFF == ord('q'):
         break
 
