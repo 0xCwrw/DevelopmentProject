@@ -56,7 +56,7 @@ def save_frame(frame, i):
 
     # Detects image and calls save frame function.
 def image_collection():
-    for i in range(1, 21):
+    for i in range(1, 31):
         while(True):
             ret, frame = cap.read()
             frame = cv2.flip(frame, 0)
@@ -77,7 +77,7 @@ def image_collection():
             else:
                 print("Too many faces detected, there should only be one person in frame.")
         save_frame(frame, i)
-        print("Face detected, sample {}/10 successful.".format(i))
+        print("Face detected, sample {}/30 successful.".format(i))
         sleep(1.6)
     if x == 0:
         print("sample collection successful...\nUser {} added to dataset.".format(newUser))
