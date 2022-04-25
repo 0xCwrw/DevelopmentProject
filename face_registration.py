@@ -56,7 +56,7 @@ def save_frame(frame, i):
 
     # Detects image and calls save frame function.
 def image_collection():
-    for i in range(1, 11):
+    for i in range(1, 21):
         while(True):
             ret, frame = cap.read()
             frame = cv2.flip(frame, 0)
