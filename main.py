@@ -29,8 +29,6 @@ while(True):
         #After prediction of ROI (Region of interest) computation is focused in that area.
         id_, conf = recogniser.predict(roi_gray)
         if conf>=40 and conf <= 80:
-            #print(5: #id_)
-            #print(labels[id_])
             font = cv2.FONT_HERSHEY_SIMPLEX
             name = labels[id_]
             color = (255, 255, 255)
