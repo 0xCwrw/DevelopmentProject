@@ -1,7 +1,7 @@
 from cProfile import label
-from curses.ascii import isalpha, isspace
 from tkinter import *
 from tkinter import messagebox
+import os
 # from guiTest import name_collection
 
 root = Tk()
@@ -20,13 +20,18 @@ def openFaceReg():
             username = player_name.get()
             username = username.lower()
             username = username.replace(" ","-")
-            Label(faceReg, text=f'{username}, registered!', pady=20).pack()
             parent_directory = "dataset/"
             path = os.path.join(parent_directory, username)
+            if os.path.isdir(path):
+                messagebox.showerror("Existing user", "This user is already a part of the system.")
+            else:
+                os.mkdir(path)
+                Label(faceReg, text=f'The directory {username} has been created.').pack()
+                #possiblly close this window and open one for image collection?
         else:
             messagebox.showerror("Invalid characters detected.", "Invalid characters in username\n letters and white space only.")
 
-
+# style this window and change variable names.
     player_name = Entry(faceReg, width=30)
     player_name.pack(pady=30)
 
