@@ -1,39 +1,70 @@
+from cProfile import label
+from curses.ascii import isalpha, isspace
 from tkinter import *
-from guiTest import nameit
-from face_registration import name_collection
+from tkinter import messagebox
+# from guiTest import name_collection
 
 root = Tk()
 root.title('Facial recognition GUI')
 root.geometry("500x350")
 
-def face_registration_window():
-    top = Toplevel()
-    top.title('GIVE ME YOUR FACE CHILD GUI')
-    top.geometry("400x250")
-    lbl = Label(top, text="Hellow world").pack()
-    input = Entry(top).pack(pady=20)
+def openFaceReg():
+    faceReg = Toplevel()
+    faceReg.title('Face registration')
+    faceReg.geometry("500x350")
+    welcome = Label(faceReg, text ="Welcome, please enter name.").pack()
+
+    def name_collection():
+        if(any(x.isalpha() for x in player_name.get())
+        and all(x.isalpha() or x.isspace() for x in player_name.get())):
+            username = player_name.get()
+            username = username.lower()
+            username = username.replace(" ","-")
+            Label(faceReg, text=f'{username}, registered!', pady=20).pack()
+            parent_directory = "dataset/"
+            path = os.path.join(parent_directory, username)
+        else:
+            messagebox.showerror("Invalid characters detected.", "Invalid characters in username\n letters and white space only.")
+
+
+    player_name = Entry(faceReg, width=30)
+    player_name.pack(pady=30)
+
     
-def face_registration():
-    user = name_collection(input.get())
-    lbl.config(text=user)
-
-def submit():
-    greet = nameit(my_box.get())
-    my_label.config(text=greet)
 
 
-my_box = Entry(root)
-my_box.pack(pady=20)
+    Button(faceReg, text="register player", padx=10, pady=5, command= name_collection).pack()
+    
+    
+    
 
-my_label = Label(root, text="")
-my_label.pack(pady=20)
 
-my_button = Button(root, text="Submit Name", command=submit)
-my_button.pack(pady=20)
 
-face_Button = Button(root, text="GIBE FACE", command=face_registration).pack()
-Rec_Button = Button(root, text="Hey ;)", command=face_recognition).pack()
 
-button_quit = Button(root, text="Exit program", command=root.quit)
-button_quit.pack()
+# def faceReg_window():
+#     # Standard window formating
+#     faceReg = Toplevel()
+#     faceReg.title('Face registration')
+#     faceReg.geometry("500x350")
+#     welcome = Label(faceReg, text="Hi").pack()
+#     # face registration window specific
+#     user = Entry(faceReg, width=50).pack()
+
+ 
+
+
+
+# def faceRec_window():
+#     # Standard window formating
+#     faceRec = Toplevel()
+#     faceRec.title("Face recognition")
+#     faceRec.geometry("500x350")
+#     welcome = Label(faceRec, text="Hi this is face rec").pack()
+#     # 
+
+
+
+faceReg_button = Button(root, text="Register your face here", command=openFaceReg).pack()
+# faceRec_button = Button(root, text="Main face registration program", command=faceRec_window).pack()
+# button_quit = Button(root, text="Exit program", command=root.quit).pack()
 root.mainloop()
