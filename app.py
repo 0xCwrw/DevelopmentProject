@@ -8,8 +8,9 @@ from time import sleep
 from PIL import Image
 import pickle
 
+# modify for face recognition instead of pswd, then add if fails to use pswd
 
-class LoginPage(tk.Tk): # modify for face recognition instead of pswd, then add if fails to use pswd
+class LoginPage(tk.Tk):
     def __init__(self, *args, **kwards):
         tk.Tk.__init__(self, *args, **kwards)
         
@@ -112,7 +113,10 @@ class LoginPage(tk.Tk): # modify for face recognition instead of pswd, then add 
         #         print("you need to register first")
         #         return False
 
-class SignupPage(tk.Tk):        # incorporate the face registration process here
+    # incorporate the face registration process here
+
+
+class SignupPage(tk.Tk):        
     def __init__(self, *args, **kwargs):
         tk.Tk.__init__(self, *args, **kwargs)
 
@@ -226,8 +230,11 @@ class SignupPage(tk.Tk):        # incorporate the face registration process here
             cv2.imshow('Face registration', source)
             if cv2.waitKey(20) & 0xFF == ord('q'):
                 cv2.destroyAllWindows()
-                SignupPage.destroy(self) 
-class MyApp(tk.Tk): # no idea what to put here
+                SignupPage.destroy(self)
+
+    # Valdation complete, my app entered.
+    
+class MyApp(tk.Tk):
 
     def __init__(self, *args, **kwargs):
 
