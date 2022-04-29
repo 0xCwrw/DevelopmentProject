@@ -51,12 +51,15 @@ class LoginPage(tk.Tk): # modify for face recognition instead of pswd, then add 
             password = entry_pw.get()
             validation = validate(username, password)
             if validation:
-                tk.messagebox.showinfo("Login Successful", "Welcome {}".format(username))
-                root.deiconify()
-                top.destroy()
+                Face_recognition = MFA(username)
+                if Face_recognition:
+                    tk.messagebox.showinfo("Login Successful", "Welcome {}".format(username))
+                    root.deiconify()
+                    top.destroy()
             else:
                 tk.messagebox.showerror("Information", "The username or password you have entered are incorrect ")
-        def validate(username, password):
+
+        def MFA(username):
             face_cascade = cv2.CascadeClassifier('cascades/haarcascade_frontalface_default.xml')
             recogniser = cv2.face.LBPHFaceRecognizer_create()
             recogniser.read("recognisers/face-trainner.yml")
@@ -99,18 +102,17 @@ class LoginPage(tk.Tk): # modify for face recognition instead of pswd, then add 
             cap.release()
             cv2.destroyAllWindows()
             return True
-
-        # def validate_password(username, password):
-        #     try:
-        #         with open("credentials.txt", "r") as credentials:
-        #             for line in credentials:
-        #                 line = line.split(",")
-        #                 if line [1] == username and line[3] == password:
-        #                     return True
-        #             return False
-        #     except FileNotFoundError:
-        #         print("you need to register first")
-        #         return False
+        def validate(username, password):
+            try:
+                with open("credentials.txt", "r") as credentials:
+                    for line in credentials:
+                        line = line.split(",")
+                        if line [1] == username and line[3] == password:
+                            return True
+                    return False
+            except FileNotFoundError:
+                print("you need to register first")
+                return False
 
 class SignupPage(tk.Tk):        # incorporate the face registration process here
     def __init__(self, *args, **kwargs):
@@ -190,26 +192,25 @@ class SignupPage(tk.Tk):        # incorporate the face registration process here
             cap = cv2.VideoCapture(0, cv2.CAP_V4L2)
             # collection_progess = ttk.Progressbar(self, orient=HORIZONTAL, length=300, mode='determinate')
             # collection_progess.pack()
-            for i in range(1, 4):
-                while(True):
-                    ret, frame = cap.read()
-                    frame = cv2.flip(frame, 0)
-                    sleep(1)
-                    break
-                sleep(2)
+            for i in range(1, 31):
                 while(True):
                     # Capture frame-by-frame
                     ret, frame = cap.read()
-                    show_display(frame)
                     frame = cv2.flip(frame, 0)
                     gray  = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
                     faces = face_cascade.detectMultiScale(gray, scaleFactor=1.5, minNeighbors=5)
+                    message = ""
+                    cv2.imshow(f'Face registration: {message}', frame)
+                    if cv2.waitKey(20) & 0xFF == ord('q'):
+                        cap.release()
+                        cv2.destroyAllWindows
                     if len(faces) ==1:
+                        message = f'Face detected, sample {i}/30 successful'
                         break
                     elif len(faces) < 1:
-                        print("No faces detected.")
+                        message = "No faces detected."
                     else:
-                        print("Too many faces detected.")
+                        message = "Too many faces detected."
                 cv2.imwrite("{}/test{}.png".format(path, i), frame)
                 sleep(1.6)
                 # message_label = Label(faceReg, text = message)
@@ -217,22 +218,21 @@ class SignupPage(tk.Tk):        # incorporate the face registration process here
                 # collection_progess['value'] += 33
                 # faceReg.update_idletasks()
             sleep(2)
-            finsih = messagebox.showinfo('User setup complete.','Press OK to finish.')
             cap.release()
             cv2.destroyAllWindows()
+            finsih = messagebox.showinfo('User setup complete.','Press OK to finish.')
+            exec(open('faces_training.py').read())
             if finsih == "ok":
                 SignupPage.destroy(self)    
-        def show_display(source):
-            cv2.imshow('Face registration', source)
-            if cv2.waitKey(20) & 0xFF == ord('q'):
-                cv2.destroyAllWindows()
-                SignupPage.destroy(self) 
 class MyApp(tk.Tk): # no idea what to put here
 
     def __init__(self, *args, **kwargs):
 
         tk.Tk.__init__(self, *args, **kwargs)
         ttk.Label(self, text="Hello you are in my app").pack()
+
+        self.geometry("626x431")
+        self.resizable(0,0)
 
 top = LoginPage()
 top.title("Face recognition app - Login")
