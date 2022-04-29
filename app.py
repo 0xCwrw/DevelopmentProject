@@ -1,16 +1,13 @@
 import tkinter as tk
 from tkinter import Label, messagebox
 from tkinter import ttk
-from numpy import roots
 import os
 import cv2
 from time import sleep
-from PIL import Image
 import pickle
 
-# modify for face recognition instead of pswd, then add if fails to use pswd
 
-class LoginPage(tk.Tk):
+class LoginPage(tk.Tk): # modify for face recognition instead of pswd, then add if fails to use pswd
     def __init__(self, *args, **kwards):
         tk.Tk.__init__(self, *args, **kwards)
         
@@ -75,7 +72,6 @@ class LoginPage(tk.Tk):
             detected = 1
             while detected <= 10:
                 while(True):
-                    # Capture frame-by-frame
                     ret, frame = cap.read()
                     frame = cv2.flip(frame, 0)
                     gray  = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
@@ -115,10 +111,7 @@ class LoginPage(tk.Tk):
                 print("you need to register first")
                 return False
 
-    # incorporate the face registration process here
-
-
-class SignupPage(tk.Tk):        
+class SignupPage(tk.Tk):
     def __init__(self, *args, **kwargs):
         tk.Tk.__init__(self, *args, **kwargs)
 
@@ -194,8 +187,6 @@ class SignupPage(tk.Tk):
         def image_collection(path):
             face_cascade = cv2.CascadeClassifier('cascades/haarcascade_frontalface_default.xml')
             cap = cv2.VideoCapture(0, cv2.CAP_V4L2)
-            # collection_progess = ttk.Progressbar(self, orient=HORIZONTAL, length=300, mode='determinate')
-            # collection_progess.pack()
             for i in range(1, 31):
                 while(True):
                     # Capture frame-by-frame
@@ -217,30 +208,14 @@ class SignupPage(tk.Tk):
                         message = "Too many faces detected."
                 cv2.imwrite("{}/test{}.png".format(path, i), frame)
                 sleep(1.6)
-                # message_label = Label(faceReg, text = message)
-                # message_label.pack()
-                # collection_progess['value'] += 33
-                # faceReg.update_idletasks()
-            sleep(2)
+            sleep(1)
             cap.release()
             cv2.destroyAllWindows()
             finsih = messagebox.showinfo('User setup complete.','Press OK to finish.')
             exec(open('faces_training.py').read())
             if finsih == "ok":
                 SignupPage.destroy(self)    
-<<<<<<< HEAD
-class MyApp(tk.Tk): # no idea what to put here
-=======
-        def show_display(source):
-            cv2.imshow('Face registration', source)
-            if cv2.waitKey(20) & 0xFF == ord('q'):
-                cv2.destroyAllWindows()
-                SignupPage.destroy(self)
-
-    # Valdation complete, my app entered.
-    
 class MyApp(tk.Tk):
->>>>>>> cdada5d8523d6e17b443e6339e6e5566fbf49c76
 
     def __init__(self, *args, **kwargs):
 
