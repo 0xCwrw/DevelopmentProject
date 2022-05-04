@@ -231,5 +231,5 @@ top.title("Face recognition app - Login")
 
 root = MyApp()
 root.withdraw()
-root.title("Main page, rename at bottom of script.")
+root.title("Main page, My app")
 root.mainloop()
